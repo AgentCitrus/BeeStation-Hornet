@@ -246,3 +246,30 @@
 
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //So they don't die trying to fix wiring
+
+/mob/living/simple_animal/drone/servo_skull
+	name = "Servo-Skull"
+	desc = "A service drone fashioned from a human skull embedded with a personality matrix, designed for simple mechanical tasks."
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "servoskull"
+	icon_living = "servoskull"
+	icon_dead = "servoskull_dead"
+	health = 20
+	maxHealth = 20
+	sight = (SEE_TURFS | SEE_MOBS | SEE_OBJS)
+	ventcrawler = VENTCRAWLER_NONE
+	initial_language_holder = /datum/language_holder/drone/chaplain
+	laws = \
+	"1. Serve your creator and follow their commands, no matter the cost."
+	picked = TRUE
+	flavortext = ""
+	default_storage = null
+	movement_type = FLYING
+
+/mob/living/simple_animal/drone/Initialize(mapload)
+	. = ..()
+	real_name = "[pick(GLOB.greek_letters)] [pick(GLOB.greek_letters)]-[rand(1,99)]"
+	name = real_name
+
+	access_card = new /obj/item/card/id(src)
+	access_card.access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE, ACCESS_MAINT_TUNNELS)

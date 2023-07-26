@@ -204,6 +204,42 @@
 	chosen_implant = null
 	return TRUE
 
+/datum/religion_rites/forge_servo_skull
+	name = "Forge Servo-Skull"
+	desc = "Forge a floating mechanical skull-drone from a mindless head, complete with a personality matrix, if any are available in the database."
+	ritual_length = 50 SECONDS
+	ritual_invocations = list("I offer you this imperfect vessel ...",
+						"... Reform it in your immaculate vision ...",
+						"... Its duty does not yet end ...")
+	invoke_msg = "... For even in death, it still serves."
+	favor_cost = 1000
+	var/obj/item/bodypart/head/skull
+
+/datum/religion_rites/forge_servo_skull/perform_rite(mob/living/user, atom/religious_tool)
+	skull = locate() in get_turf(religious_tool)
+	if(!skull)
+		to_chat(user, "<span class='warning'>This rite requires a head to forge a servo-skull from.</span>")
+		return FALSE
+	if(skull.brainmob)
+		to_chat(user, "<span class='warning'>This head still possesses an intact mind...</span>")
+		return FALSE
+	return ..()
+
+/datum/religion_rites/forge_servo_skull/invoke_effect(mob/living/user, atom/religious_tool)
+	var/turf/altar_turf = get_turf(religious_tool)
+	var/list/candidates = pollGhostCandidates("Do you wish to be uploaded to a servo-skull?", ROLE_HOLY_SUMMONED, null, 10 SECONDS, POLL_IGNORE_SERVOSKULL)
+	if(!length(candidates))
+		to_chat(user, "<span class='warning'>ERROR: Unable to manifest personality matrix.")
+		user.visible_message("<span class='warning'>A personality matrix was unable to be programmed into the servo-skull.")
+		GLOB.religious_sect?.adjust_favor(favor_cost, user) //refund if nobody takes the role
+		return NOT_ENOUGH_PLAYERS
+	var/mob/dead/observer/selected = pick_n_take(candidates)
+	var/datum/mind/Mind = new /datum/mind(selected.key)
+	var/mob/living/simple_animal/drone/servo_skull/skull = new /mob/living/simple_animal/drone/servo_skull(altar_turf)
+	Mind.active = 1
+	Mind.transfer_to(skull)
+	to_chat(skull, "<span class='userdanger'>INITIALIZING PERSONALITY MATRIX... Servo-Skull unit [skull.real_name] online. You have been brought online by [user]. Serve [user.real_name] and follow [user.p_their()] every command no matter the cost.</span>")
+	return ..()
 
 /**** Ever-Burning Candle sect ****/
 

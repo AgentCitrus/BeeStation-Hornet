@@ -120,7 +120,7 @@
 /obj/item/storage/box/holy/sentinel
 	name = "Stone Sentinel Kit"
 	item_icon_state = "giantdad"
-	info_text = "Stone Sentinel Kit, for making a stalwart stance against herecy. \n<span class='notice'>The armor can hold a variety of religious items.</span>"
+	info_text = "Stone Sentinel Kit, for making a stalwart stance against heresy. \n<span class='notice'>The armor can hold a variety of religious items.</span>"
 
 /obj/item/storage/box/holy/sentinel/PopulateContents()
 	new /obj/item/clothing/suit/armor/riot/chaplain/ancient(src)
@@ -210,7 +210,7 @@
 /obj/item/storage/box/holy/adept
 	name = "Divine Adept Kit"
 	item_icon_state = "crusader"
-	info_text = "Divine Adept Kit, for standing stalward with unvavering faith. \n<span class='notice'>The robes can hold a variety of religious items.</span>"
+	info_text = "Divine Adept Kit, for standing stalwart with unwavering faith. \n<span class='notice'>The robes can hold a variety of religious items.</span>"
 
 /obj/item/storage/box/holy/adept/PopulateContents()
 	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
@@ -269,6 +269,21 @@
 	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
 	icon_state = "chaplain_hood_leader"
 
+/obj/item/storage/box/holy/techpriest
+	name = "Tech-Priest Kit"
+	item_icon_state = "techpriest"
+	info_text = "Tech-Priest Kit, for ascending beyond the weaknesses of your flesh. \n<span class='notice'>The robes can hold a variety of religious items.</span>"
+
+/obj/item/storage/box/holy/techpriest/PopulateContents()
+	new /obj/item/clothing/suit/hooded/techpriest/chaplain(src)
+
+/obj/item/clothing/suit/hooded/techpriest/chaplain
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
+	armor = list(MELEE = 50,  BULLET = 10, LASER = 10, ENERGY = 15, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80, STAMINA = 50)
+	hoodtype = /obj/item/clothing/head/hooded/techpriest/chaplain
+
+/obj/item/clothing/head/hooded/techpriest/chaplain
+	armor = list(MELEE = 50,  BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80, STAMINA = 40)
 
 // CHAPLAIN NULLROD AND CUSTOM WEAPONS //
 

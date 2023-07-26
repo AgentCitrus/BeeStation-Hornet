@@ -72,6 +72,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ReligiousTool")
+		ui.set_autoupdate(TRUE) //For favor amount + available rites based on favor
 		ui.open()
 	return COMPONENT_NO_AFTERATTACK
 

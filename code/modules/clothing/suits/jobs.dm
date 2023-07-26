@@ -183,4 +183,4 @@
 	icon_state = "techpriesthood"
 	item_state = "techpriesthood"
 	body_parts_covered = HEAD
-	flags_inv = HIDEHAIR|HIDEEARS
+	flags_inv = HIDEHAIR|HIDEEARS|HIDESNOUT
