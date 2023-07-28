@@ -14,17 +14,30 @@
 	attack_sound = 'sound/items/trayhit1.ogg'
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
-	species_chest = /obj/item/bodypart/chest/robot
-	species_head = /obj/item/bodypart/head/robot
-	species_l_arm = /obj/item/bodypart/l_arm/robot
-	species_r_arm = /obj/item/bodypart/r_arm/robot
-	species_l_leg = /obj/item/bodypart/l_leg/robot
-	species_r_leg = /obj/item/bodypart/r_leg/robot
-
 /datum/species/android/on_species_gain(mob/living/carbon/C)
 	. = ..()
 	ADD_TRAIT(C, TRAIT_XENO_IMMUNE, "xeno immune")
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYTYPE_ROBOTIC, FALSE, TRUE)
+		O.brute_reduction = 5
+		O.burn_reduction = 4
+		O.icon = null
+		O.static_icon = 'icons/mob/augmentation/augments.dmi'
+		O.is_dimorphic = FALSE
+		O.limb_id = "robotic"
+		O.update_limb()
 
 /datum/species/android/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	REMOVE_TRAIT(C, TRAIT_XENO_IMMUNE, "xeno immune")
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYTYPE_ORGANIC,FALSE, TRUE)
+		O.brute_reduction = initial(O.brute_reduction)
+		O.burn_reduction = initial(O.burn_reduction)
+		O.icon = initial(O.icon)
+		O.static_icon = initial(O.static_icon)
+		O.is_dimorphic = initial(O.is_dimorphic)
+		O.limb_id = initial(O.limb_id)
+		O.update_limb()

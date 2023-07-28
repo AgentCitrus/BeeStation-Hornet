@@ -9,6 +9,7 @@
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
 #define SCOUTDRONE	"drone_scout"
+#define SKULLDRONE	"drone_skull"
 
 #define MAINTDRONE_HACKED "drone_maint_red"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
@@ -262,6 +263,7 @@
 	laws = \
 	"1. Serve your creator and follow their commands, no matter the cost."
 	picked = TRUE
+	visualAppearance = SKULLDRONE
 	flavortext = ""
 	default_storage = null
 	movement_type = FLYING
