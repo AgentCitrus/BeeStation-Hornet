@@ -343,6 +343,39 @@
 	uniform = /obj/item/clothing/under/syndicate/combat
 	suit = /obj/item/clothing/suit/jacket
 
+/datum/role_preference/antagonist/mutant
+	name = "Mutant"
+	description = "A living experiment who has escaped from a top secret NanoTrasen or Syndicate facility. \
+	Attune yourself to warp rifts, send crew to HQ for gene extraction, and gain access to powerful \
+	special abilities."
+	antag_datum = /datum/antagonist/mutant
+
+/datum/role_preference/antagonist/mutant/get_preview_icon()
+	var/icon/final_icon = render_preview_outfit(/datum/outfit/mutant_preview)
+
+	final_icon.Scale(64, 64)
+
+	var/icon/mut_icon = icon('icons/mob/hud.dmi', "mutant")
+	mut_icon.Scale(45, 45)
+	mut_icon.Crop(1, 1, 64, 64)
+	mut_icon.Shift(EAST, 8)
+	mut_icon.Shift(NORTH, 16)
+	final_icon.Blend(inc_icon, ICON_OVERLAY)
+
+	return finish_preview_icon(final_icon)
+
+/datum/outfit/mutant_preview
+	name = "Mutant (Preview only)"
+	uniform = /obj/item/clothing/under/suit/black
+	suit = /obj/item/clothing/suit/toggle/lawyer/black
+	neck = /obj/item/clothing/neck/tie/black
+	glasses = /obj/item/clothing/glasses/sunglasses/advanced
+	r_hand = /obj/item/melee/touch_attack/shock
+
+/datum/outfit/mutant_preview/post_equip(mob/living/carbon/human/H, visualsOnly)
+	H.hair_style = "Keanu Hair"
+	H.update_hair()
+
 /datum/role_preference/antagonist/nuclear_operative
 	name = "Nuclear Operative"
 	description = "Congratulations, agent. You have been chosen to join the Syndicate \

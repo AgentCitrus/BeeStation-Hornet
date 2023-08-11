@@ -14,7 +14,7 @@
 	desc = "Choose your set of mutant abilities"
 	button_icon_state = "blink"
 
-/datum/action/innate/mutant/choose_type/IsAvailable()
+/datum/action/innate/mutant/IsAvailable()
 	if(!owner.mind.has_antag_datum(/datum/antagonist/mutant))
 		return FALSE
 	return ..()
@@ -31,6 +31,12 @@
 		var/type_name = initial(J.name)
 		possible_types[type_name] = J
 	var/selected_type = input(O, "Select your type of mutant.", "Mutant Types") as null|anything in possible_types
+
+	if(isnull(selected_type))
+		to_chat(O, "<span class='warning'>You must select a type of mutant!</span>")
+		var/datum/action/innate/mutant/C = new /datum/action/innate/mutant/choose_type(src)
+		C.Grant(O)
+		return
 
 	var/datum/mutant_type/T = possible_types[selected_type]
 	M.mutant_type = new T
