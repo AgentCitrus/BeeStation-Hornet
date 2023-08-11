@@ -324,6 +324,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define CYBORG_ITEM_TRAIT "cyborg-item"
 #define ADMIN_TRAIT "admin" // (B)admins only.
 #define CHANGELING_TRAIT "changeling"
+#define MUTANT_TRAIT "mutant"
 #define CULT_TRAIT "cult"
 #define CURSED_ITEM_TRAIT "cursed-item" // The item is magically cursed
 #define ABSTRACT_ITEM_TRAIT "abstract-item"

@@ -41,3 +41,7 @@
 /datum/role_preference/antagonist/internal_affairs
 	name = "Internal Affairs Agent"
 	antag_datum = /datum/antagonist/traitor/internal_affairs
+
+/datum/role_preference/antagonist/mutant
+	name = "Mutant"
+	antag_datum = /datum/antagonist/mutant

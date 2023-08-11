@@ -127,6 +127,11 @@
 	mood_change =  2
 	hidden = TRUE
 
+/datum/mood_event/mutantgang
+	description = "<span class='nicegreen'>Let's show those bastards what we're made of!</span>\n"
+	mood_change =  4
+	hidden = TRUE
+
 /datum/mood_event/family_heirloom
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
