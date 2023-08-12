@@ -360,7 +360,7 @@
 	mut_icon.Crop(1, 1, 64, 64)
 	mut_icon.Shift(EAST, 8)
 	mut_icon.Shift(NORTH, 16)
-	final_icon.Blend(inc_icon, ICON_OVERLAY)
+	final_icon.Blend(mut_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 

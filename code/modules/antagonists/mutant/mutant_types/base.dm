@@ -5,14 +5,14 @@
 	var/list/special_abilities = list()
 
 /datum/action/innate/mutant
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	icon_icon = 'icons/mob/actions/actions_mutant.dmi'
 	background_icon_state = "bg_spell"
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/innate/mutant/choose_type
 	name = "Choose Mutant Type"
 	desc = "Choose your set of mutant abilities"
-	button_icon_state = "blink"
+	button_icon_state = "choose_type"
 
 /datum/action/innate/mutant/IsAvailable()
 	if(!owner.mind.has_antag_datum(/datum/antagonist/mutant))
@@ -47,3 +47,27 @@
 
 	for(var/T in M.mutant_type.passive_effects)
 		ADD_TRAIT(O, T, MUTANT_TRAIT)
+
+/obj/effect/proc_holder/spell/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/targeted/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/targeted/touch/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/aimed/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/aoe_turf/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	clothes_req = FALSE
