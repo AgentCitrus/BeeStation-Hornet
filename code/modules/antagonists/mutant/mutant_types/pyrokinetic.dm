@@ -10,9 +10,21 @@
 	passive_effects = list(
 		TRAIT_NOFIRE,
 		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_COLDWEAKNESS,
+		TRAIT_LOWPRESSUREWEAKNESS
 	)
-	special_abilities = list()
+	special_abilities = list(
+		/obj/effect/proc_holder/spell/targeted/fire_sworn/fire_form,
+		/obj/effect/proc_holder/spell/aoe_turf/mutant/rain_fire,
+		/obj/effect/proc_holder/spell/mutant/blistering_rage
+	)
+
+/////////////////////////////////////////
+//                                     //
+//           ACTIVE ABILITIES          //
+//                                     //
+/////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/aimed/mutant/flame_dart
 	name = "Flame Dart"
@@ -53,7 +65,7 @@
 	name = "Fireball"
 	desc = "Launch a large ball of explosive fire."
 	range = 20
-	charge_max = 15 SECONDS
+	charge_max = 25 SECONDS
 	projectile_type = /obj/projectile/magic/fireball/mutant
 	base_icon_state = "fireball"
 	action_icon_state = "fireball"
@@ -116,6 +128,8 @@
 	var/fire_stacks = 4
 
 /obj/item/melee/touch_attack/searing_touch/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
 	if(isliving(target))
 		target.visible_message("<span class='danger'>[user] sears [target]!</span>","<span class='userdanger'>[user] sears you!</span>")
 		if(iscarbon(target))
@@ -136,7 +150,7 @@
 			return ..()
 		else
 			to_chat(user, "<span class='notice'>You fail to melt the wall with your hand.</span>")
-	else
+	else if(!isopenturf(target) || !isitem(target))
 		use_charge()
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/scorching_rebuke
@@ -156,8 +170,82 @@
 	var/fire_stacks = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/scorching_rebuke/cast(list/targets, mob/user = usr)
-	for(var/T in targets)
-		if(isliving(T))
-			var/mob/living/L = T
-			L.adjust_fire_stacks(fire_stacks)
+	for(var/turf/T in targets)
+		for(var/atom/movable/AM in T)
+			if(isliving(AM))
+				var/mob/living/L = AM
+				L.adjust_fire_stacks(fire_stacks)
+				L.IgniteMob()
 	..(targets, user, 0)
+
+/////////////////////////////////////////
+//                                     //
+//          SPECIAL ABILITIES          //
+//                                     //
+/////////////////////////////////////////
+
+/obj/effect/proc_holder/spell/targeted/fire_sworn/fire_form
+	name = "Fire Form"
+	desc = "Meld flesh and flame temporarily, engulfing yourself and those nearby in fire."
+	requires_heretic_focus = FALSE
+	invocation = ""
+	invocation_type = INVOCATION_NONE
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	action_icon_state = "fire_ring"
+	action_background_icon_state = "bg_spell"
+	duration = 30 SECONDS
+	charge_max = 1 MINUTES
+	antimagic_allowed = TRUE
+
+/obj/effect/proc_holder/spell/aoe_turf/mutant/rain_fire
+	name = "Rain Fire"
+	desc = "Create fire above, and rain hell on those below."
+	range = 2
+	charge_max = 20 SECONDS
+	action_icon_state = "fire_rain"
+	action_background_icon_state = "bg_spell"
+	var/waves = 5
+
+/obj/effect/proc_holder/spell/aoe_turf/mutant/rain_fire/cast(list/targets, mob/user = usr)
+	for(var/i = 1 to waves)
+		for(var/turf in RANGE_TURFS(2, user))
+			var/turf/T = turf
+			if(prob(30))
+				new /obj/effect/temp_visual/target/mutant(T)
+		sleep(12)
+
+/obj/effect/temp_visual/target/mutant/fall(list/flame_hit)
+	var/turf/T = get_turf(src)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
+	new /obj/effect/temp_visual/fireball(T)
+	sleep(duration)
+	if(ismineralturf(T))
+		var/turf/closed/mineral/M = T
+		M.gets_drilled()
+	playsound(T, "explosion", 80, 1)
+	new /obj/effect/hotspot(T)
+	T.hotspot_expose(700, 50, 1)
+	for(var/mob/living/L in T.contents)
+		if(L.mind?.has_antag_datum(/datum/antagonist/mutant))
+			continue
+		if(islist(flame_hit) && !flame_hit[L])
+			L.adjustFireLoss(40)
+			to_chat(L, "<span class='userdanger'>You're hit by raining fire!</span>")
+			flame_hit[L] = TRUE
+		else
+			L.adjustFireLoss(10) //if we've already hit them, do way less damage
+
+/obj/effect/proc_holder/spell/mutant/blistering_rage
+	name = "Blistering Rage"
+	desc = "Channel your anger into determination, using fire to mend yourself slightly and gaining a temporary speed boost."
+	action_icon_state = "fire_trap"
+	charge_max = 30 SECONDS
+
+/obj/effect/proc_holder/spell/mutant/blistering_rage/cast(list/targets, mob/user = usr)
+	var/mob/living/carbon/U = user
+	U.adjustBruteLoss(-10, FALSE)
+	U.adjustFireLoss(-10, FALSE)
+	U.adjustToxLoss(-10, FALSE)
+	U.adjustOxyLoss(-10, FALSE)
+	U.add_movespeed_modifier(MOVESPEED_ID_PYRO_RAGE, update=TRUE, priority=100, multiplicative_slowdown=-0.2, blacklisted_movetypes=(FLYING|FLOATING))
+	addtimer(CALLBACK(U, TYPE_PROC_REF(/mob, remove_movespeed_modifier), MOVESPEED_ID_PYRO_RAGE, TRUE), 10 SECONDS)

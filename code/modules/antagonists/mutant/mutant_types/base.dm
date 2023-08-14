@@ -51,23 +51,35 @@
 /obj/effect/proc_holder/spell/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/targeted/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/targeted/touch/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/aimed/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/aoe_turf/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE

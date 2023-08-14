@@ -9,6 +9,7 @@
 	// Mutant stuff
 	var/datum/mutant_type/mutant_type
 	var/datum/action/innate/mutant/choose_type
+	var/list/current_special_abilities = list()
 
 /datum/antagonist/mutant/on_gain()
 	choose_type = new /datum/action/innate/mutant/choose_type(src)
@@ -35,3 +36,16 @@
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_MUT]
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
+
+/datum/antagonist/mutant/proc/grant_special_ability()
+	for(var/I in mutant_type.special_abilities)
+		if(!current_special_abilities.Find(I))
+			var/obj/effect/proc_holder/spell/S = new I
+			current_special_abilities.Add(S)
+			owner.AddSpell(S)
+			return
+
+/datum/antagonist/mutant/proc/remove_special_ability()
+	var/S = pick(current_special_abilities)
+	owner.RemoveSpell(S)
+	current_special_abilities.Remove(S)
