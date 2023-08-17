@@ -49,3 +49,6 @@
 	var/S = pick(current_special_abilities)
 	owner.RemoveSpell(S)
 	current_special_abilities.Remove(S)
+
+/datum/antagonist/mutant/proc/is_mutant_type(datum/mutant_type/T)
+	return mutant_type == T

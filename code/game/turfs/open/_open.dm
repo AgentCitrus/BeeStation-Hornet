@@ -170,15 +170,15 @@
 	air.set_temperature(air.return_temperature() + temp)
 	air_update_turf()
 
-/turf/open/proc/freeze_turf()
-	for(var/obj/I in contents)
-		if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.obj_flags & FREEZE_PROOF))
-			I.AddElement(/datum/element/frozen)
-
-	for(var/mob/living/L in contents)
-		if(L.bodytemperature <= 50)
-			L.apply_status_effect(/datum/status_effect/freon)
-	MakeSlippery(TURF_WET_PERMAFROST, 50)
+/turf/open/proc/freeze_turf(duration = 50, freeze_items = FALSE, freeze_mobs = FALSE)
+	if(freeze_items)
+		for(var/obj/I in contents)
+			if(!HAS_TRAIT(I, TRAIT_FROZEN) && !(I.resistance_flags & FREEZE_PROOF))
+				I.AddElement(/datum/element/frozen)
+	if(freeze_mobs)
+		for(var/mob/living/L in contents)
+			L.apply_status_effect(STATUS_EFFECT_FROZEN)
+	MakeSlippery(TURF_WET_PERMAFROST, duration)
 	return TRUE
 
 /turf/open/proc/water_vapor_gas_act()

@@ -148,7 +148,7 @@
 	if(.)
 		var/mob/living/L = target
 		if(istype(L))
-			L.apply_status_effect(/datum/status_effect/freon/watcher)
+			L.apply_status_effect(STATUS_EFFECT_FROZEN_WATCHER)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	fromtendril = TRUE

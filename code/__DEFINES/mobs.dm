@@ -296,6 +296,7 @@
 #define SLIDE_ICE				(1<<3)
 #define SLIP_WHEN_CRAWLING		(1<<4) //clown planet ruin
 #define NO_SLIP_ON_CATWALK      (1<<5)
+#define FROZEN_TURF				(1<<6)
 
 ///Flags used by the flags parameter of electrocute act.
 ///Makes it so that the shock doesn't take gloves into account.

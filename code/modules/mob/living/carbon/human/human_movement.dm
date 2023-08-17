@@ -10,6 +10,8 @@
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return FALSE
+	if((lube & FROZEN_TURF) && HAS_TRAIT(src, TRAIT_NOSLIPICE))
+		return FALSE
 	if (lube & GALOSHES_DONT_HELP)
 		return ..()
 	if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))

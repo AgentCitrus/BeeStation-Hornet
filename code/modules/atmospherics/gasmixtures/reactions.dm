@@ -75,7 +75,7 @@
 	var/consumed = 0
 	switch(air.return_temperature())
 		if(-INFINITY to WATER_VAPOR_DEPOSITION_POINT)
-			if(location?.freeze_turf())
+			if(location?.freeze_turf(freeze_items = TRUE))
 				consumed = MOLES_GAS_VISIBLE
 		if(WATER_VAPOR_DEPOSITION_POINT to WATER_VAPOR_CONDENSATION_POINT)
 			location.water_vapor_gas_act()

@@ -91,14 +91,14 @@
 	owner.forceMove(target.loc)
 	log_game("[key_name(owner)] was forcefully teleported to [AREACOORD(target)] with a chilling bluespace target, used by [key_name(target)]")
 
-/atom/movable/screen/alert/status_effect/freon/stasis
+/atom/movable/screen/alert/status_effect/frozen/stasis
 	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
 
 /datum/status_effect/frozenstasis
 	id = "slime_frozen"
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1 //Will remove self when block breaks.
-	alert_type = /atom/movable/screen/alert/status_effect/freon/stasis
+	alert_type = /atom/movable/screen/alert/status_effect/frozen/stasis
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()

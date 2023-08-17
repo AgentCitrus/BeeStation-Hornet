@@ -7,7 +7,7 @@
 		/obj/effect/proc_holder/spell/targeted/touch/mutant/searing_touch,
 		/obj/effect/proc_holder/spell/aoe_turf/repulse/scorching_rebuke
 	)
-	passive_effects = list(
+	passive_traits = list(
 		TRAIT_NOFIRE,
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
@@ -16,7 +16,7 @@
 	)
 	special_abilities = list(
 		/obj/effect/proc_holder/spell/targeted/fire_sworn/fire_form,
-		/obj/effect/proc_holder/spell/aoe_turf/mutant/rain_fire,
+		/obj/effect/proc_holder/spell/mutant/rain_fire,
 		/obj/effect/proc_holder/spell/mutant/blistering_rage
 	)
 
@@ -150,8 +150,8 @@
 			return ..()
 		else
 			to_chat(user, "<span class='notice'>You fail to melt the wall with your hand.</span>")
-	else if(!isopenturf(target) || !isitem(target))
-		use_charge()
+	else
+		return
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/scorching_rebuke
 	name = "Scorching Rebuke"
@@ -197,7 +197,7 @@
 	charge_max = 1 MINUTES
 	antimagic_allowed = TRUE
 
-/obj/effect/proc_holder/spell/aoe_turf/mutant/rain_fire
+/obj/effect/proc_holder/spell/mutant/rain_fire
 	name = "Rain Fire"
 	desc = "Create fire above, and rain hell on those below."
 	range = 2
@@ -206,7 +206,7 @@
 	action_background_icon_state = "bg_spell"
 	var/waves = 5
 
-/obj/effect/proc_holder/spell/aoe_turf/mutant/rain_fire/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/mutant/rain_fire/cast(list/targets, mob/user = usr)
 	for(var/i = 1 to waves)
 		for(var/turf in RANGE_TURFS(2, user))
 			var/turf/T = turf
@@ -247,5 +247,5 @@
 	U.adjustFireLoss(-10, FALSE)
 	U.adjustToxLoss(-10, FALSE)
 	U.adjustOxyLoss(-10, FALSE)
-	U.add_movespeed_modifier(MOVESPEED_ID_PYRO_RAGE, update=TRUE, priority=100, multiplicative_slowdown=-0.2, blacklisted_movetypes=(FLYING|FLOATING))
+	U.add_movespeed_modifier(MOVESPEED_ID_PYRO_RAGE, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	addtimer(CALLBACK(U, TYPE_PROC_REF(/mob, remove_movespeed_modifier), MOVESPEED_ID_PYRO_RAGE, TRUE), 10 SECONDS)

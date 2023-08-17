@@ -1963,16 +1963,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		//Sorry for the nasty oneline but I don't want to assign a variable on something run pretty frequently
 		H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR), blacklisted_movetypes = FLOATING)
+		var/weakness_modifier = (HAS_TRAIT(H, TRAIT_COLDWEAKNESS) ? 2 : 1)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod*(HAS_TRAIT(H, TRAIT_COLDWEAKNESS) ? 2 : 1), BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod*H.physiology.cold_mod*weakness_modifier, BURN)
 			if(120 to 200)
 				H.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod*(HAS_TRAIT(H, TRAIT_COLDWEAKNESS) ? 2 : 1), BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod*H.physiology.cold_mod*weakness_modifier, BURN)
 			else
 				H.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod*(HAS_TRAIT(H, TRAIT_COLDWEAKNESS) ? 2 : 1), BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod*H.physiology.cold_mod*weakness_modifier, BURN)
 
 	else
 		H.clear_alert("temp")

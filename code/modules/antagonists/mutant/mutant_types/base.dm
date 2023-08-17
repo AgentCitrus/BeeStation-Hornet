@@ -1,7 +1,8 @@
 /datum/mutant_type
 	var/name = "Base"
 	var/list/active_abilities = list()
-	var/list/passive_effects = list() // Include both strengths and weaknesses
+	var/list/passive_traits = list() // Include both strengths and weaknesses
+	var/list/components = list() // If any components are necessary
 	var/list/special_abilities = list()
 
 /datum/action/innate/mutant
@@ -45,41 +46,57 @@
 		var/obj/effect/proc_holder/spell/ability = new A
 		O.mind.AddSpell(ability)
 
-	for(var/T in M.mutant_type.passive_effects)
+	for(var/T in M.mutant_type.passive_traits)
 		ADD_TRAIT(O, T, MUTANT_TRAIT)
+
+	for(var/C in M.mutant_type.components)
+		O.AddComponent(C)
 
 /obj/effect/proc_holder/spell/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/targeted/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/targeted/touch/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/aimed/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/aoe_turf/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE
+
+/obj/effect/proc_holder/spell/cone/staggered/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_NONE

@@ -117,6 +117,11 @@
 
 #define STATUS_EFFECT_LING_TRANSFORMATION /datum/status_effect/ling_transformation // transform stung by a changeling
 
+#define STATUS_EFFECT_FROZEN /datum/status_effect/frozen
+
+#define STATUS_EFFECT_FROZEN_WATCHER /datum/status_effect/frozen/watcher
+
+#define STATUS_EFFECT_FROZEN_CRYOSTASIS /datum/status_effect/frozen/cryostasis
 
 //---------//
 // NEUTRAL //
