@@ -1348,19 +1348,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//metabolism change
 	if(H.nutrition > NUTRITION_LEVEL_FAT)
-		H.metabolism_efficiency = 1
+		H.metabolism_efficiency = 1 * H.metabolism_modifier
 	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
-		if(H.metabolism_efficiency != 1.25 && !HAS_TRAIT(H, TRAIT_NOHUNGER))
+		if(H.metabolism_efficiency != 1.25 * H.metabolism_modifier && !HAS_TRAIT(H, TRAIT_NOHUNGER))
 			to_chat(H, "<span class='notice'>You feel vigorous.</span>")
-			H.metabolism_efficiency = 1.25
+			H.metabolism_efficiency = 1.25 * H.metabolism_modifier
 	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		if(H.metabolism_efficiency != 0.8)
+		if(H.metabolism_efficiency != 0.8 * H.metabolism_modifier)
 			to_chat(H, "<span class='notice'>You feel sluggish.</span>")
-		H.metabolism_efficiency = 0.8
+		H.metabolism_efficiency = 0.8 * H.metabolism_modifier
 	else
-		if(H.metabolism_efficiency == 1.25)
+		if(H.metabolism_efficiency == 1.25 * H.metabolism_modifier)
 			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
-		H.metabolism_efficiency = 1
+		H.metabolism_efficiency = 1 * H.metabolism_modifier
 
 	//Hunger slowdown for if mood isn't enabled
 	if(CONFIG_GET(flag/disable_human_mood))

@@ -652,3 +652,49 @@
 	name = "Blessing of Dusk and Dawn"
 	desc = "Many things hide beyond the horizon. With Owl's help I managed to slip past Sun's guard and Moon's watch."
 	icon_state = "duskndawn"
+
+/datum/status_effect/stoneskin
+	id = "Stoneskin"
+	alert_type = /atom/movable/screen/alert/status_effect/stoneskin
+	var/mob/living/carbon/human/H
+
+	var/list/stoneskin_traits = list(TRAIT_RESISTHEAT, TRAIT_RESISTCOLD, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE, TRAIT_PIERCEIMMUNE, TRAIT_TOXIMMUNE, TRAIT_NOMETABOLISM, TRAIT_STRONG_GRABBER)
+	var/active_dam_mod = 0.5
+	var/weak_dam_mod = 0.8
+
+	var/list/old_traits
+	var/old_brute_mod
+	var/old_burn_mod
+
+/datum/status_effect/stoneskin/on_apply()
+	owner.add_movespeed_modifier(MOVESPEED_ID_STONESKIN, update=TRUE, priority=100, multiplicative_slowdown=1.5)
+	old_traits = owner.status_traits.Copy()
+	for(var/T in stoneskin_traits)
+		ADD_TRAIT(owner, T, MUTANT_TRAIT)
+	if(ishuman(owner))
+		H = owner
+		old_brute_mod = H.physiology.brute_mod
+		old_burn_mod = H.physiology.burn_mod
+		H.physiology.brute_mod = active_dam_mod
+		H.physiology.burn_mod = active_dam_mod
+	return ..()
+
+/datum/status_effect/stoneskin/tick()
+	if(owner.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		H.physiology.brute_mod = weak_dam_mod
+		H.physiology.burn_mod = weak_dam_mod
+	else
+		H.physiology.brute_mod = active_dam_mod
+		H.physiology.burn_mod = active_dam_mod
+
+/datum/status_effect/stoneskin/on_remove()
+	owner.remove_movespeed_modifier(MOVESPEED_ID_STONESKIN)
+	owner.status_traits = old_traits
+	if(ishuman(owner))
+		H.physiology.brute_mod = old_brute_mod
+		H.physiology.burn_mod = old_burn_mod
+
+/atom/movable/screen/alert/status_effect/stoneskin
+	name = "Stoneskin"
+	desc = "You have become one with stone, being able to absorb a lot more physical damage, but also being slowed down greatly."
+	icon_state = "stasis"

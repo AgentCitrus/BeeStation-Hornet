@@ -19,6 +19,7 @@
 /datum/antagonist/mutant/on_removal()
 	if (choose_type)
 		QDEL_NULL(choose_type)
+	mutant_type.on_loss(owner.current)
 	..()
 
 /datum/antagonist/mutant/apply_innate_effects(mob/living/mob_override)

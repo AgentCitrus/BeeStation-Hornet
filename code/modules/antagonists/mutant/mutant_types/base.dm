@@ -5,6 +5,22 @@
 	var/list/components = list() // If any components are necessary
 	var/list/special_abilities = list()
 
+/datum/mutant_type/proc/on_gain(mob/living/user)
+	return
+
+/datum/mutant_type/proc/on_loss(mob/living/user)
+
+	for(var/A in active_abilities)
+		user.mind.RemoveSpell(A)
+
+	for(var/T in passive_traits)
+		REMOVE_TRAIT(user, T, MUTANT_TRAIT)
+
+	for(var/C in components)
+		qdel(user.GetComponent(C))
+
+	return
+
 /datum/action/innate/mutant
 	icon_icon = 'icons/mob/actions/actions_mutant.dmi'
 	background_icon_state = "bg_spell"
@@ -52,6 +68,8 @@
 	for(var/C in M.mutant_type.components)
 		O.AddComponent(C)
 
+	M.mutant_type.on_gain(O)
+
 /obj/effect/proc_holder/spell/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
@@ -95,6 +113,13 @@
 	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/cone/staggered/mutant
+	action_icon = 'icons/mob/actions/actions_mutant.dmi'
+	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	invocation_type = INVOCATION_NONE
+
+/obj/effect/proc_holder/spell/self/mutant
 	action_icon = 'icons/mob/actions/actions_mutant.dmi'
 	still_recharging_msg = "<span class='notice'>The ability is still recharging.</span>"
 	clothes_req = FALSE

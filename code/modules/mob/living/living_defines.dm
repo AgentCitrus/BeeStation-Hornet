@@ -59,6 +59,7 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	var/list/mob_biotypes = list(MOB_ORGANIC)
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
+	var/metabolism_modifier = 1 //affects the maximum/minimum metabolism efficiency
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
 	var/list/pipes_shown = list()
