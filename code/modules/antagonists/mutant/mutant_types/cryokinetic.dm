@@ -5,7 +5,10 @@
 		/obj/effect/proc_holder/spell/aimed/mutant/freezing_sphere,
 		/obj/effect/proc_holder/spell/targeted/touch/mutant/chill_touch,
 		/obj/effect/proc_holder/spell/targeted/mutant/ice_running,
-		/obj/effect/proc_holder/spell/targeted/mutant/shatter
+		/obj/effect/proc_holder/spell/targeted/mutant/shatter,
+		/obj/effect/proc_holder/spell/targeted/mutant/cryostasis,
+		/obj/effect/proc_holder/spell/cone/staggered/mutant/frost_gust,
+		/obj/effect/proc_holder/spell/aoe_turf/mutant/sublimation
 	)
 	passive_traits = list(
 		TRAIT_RESISTCOLD,
@@ -18,9 +21,7 @@
 		/datum/component/ice_running
 	)
 	special_abilities = list(
-		/obj/effect/proc_holder/spell/targeted/mutant/cryostasis,
-		/obj/effect/proc_holder/spell/cone/staggered/mutant/frost_gust,
-		/obj/effect/proc_holder/spell/aoe_turf/mutant/sublimation
+
 	)
 
 /////////////////////////////////////////
@@ -334,9 +335,16 @@
 		var/datum/component/wet_floor/WF = T.GetComponent(/datum/component/wet_floor)
 		if(isopenturf(T) && WF && (WF.lube_flags & FROZEN_TURF))
 			T.MakeDry(TURF_WET_PERMAFROST, TRUE)
-			new /obj/effect/temp_visual/vent_wind(T)
+			new /obj/effect/temp_visual/sublimation(T)
 			for(var/mob/living/L in T)
 				playsound(L, 'sound/weapons/sear.ogg', 100, 1)
 				L.visible_message("<span class='danger'>[L] is caught in a cloud of steam!</span>", \
 								  "<span class='danger'>You are caught in a cloud of hot steam! It burns!</span>")
 				L.adjustFireLoss(sublimation_damage)
+
+/obj/effect/temp_visual/sublimation
+	icon = 'icons/obj/mutant.dmi'
+	icon_state = "steam"
+	layer = FLY_LAYER
+	duration = 1.6 SECONDS
+	mouse_opacity = 0
