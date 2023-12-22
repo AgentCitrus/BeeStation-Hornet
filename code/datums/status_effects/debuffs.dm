@@ -1311,19 +1311,29 @@
 	desc = "You're frozen inside an ice cube, and cannot move! You can still do stuff, like shooting. Resist out of the cube!"
 	icon_state = "frozen"
 
+/atom/movable/screen/alert/status_effect/frozen/Click(location, control, params)
+	. = ..()
+	var/mob/living/L = usr
+	if(!istype(L) || !L.can_resist() || L != owner)
+		return
+	if(L.last_special <= world.time)
+		return L.resist()
+
 /datum/status_effect/frozen/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(owner_resist))
-	owner.adjust_bodytemperature(-300)
 	if(!owner.stat)
 		to_chat(owner, "<span class='userdanger'>You become frozen in a cube!</span>")
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
 	owner.add_overlay(cube)
 	owner.update_mobility()
-	return ..()
 
 /datum/status_effect/frozen/tick()
 	owner.update_mobility()
-	if(can_melt && owner.bodytemperature >= BODYTEMP_NORMAL)
+	if(can_melt && owner.bodytemperature >= owner.get_body_temp_normal())
 		qdel(src)
 
 /datum/status_effect/frozen/proc/owner_resist()
@@ -1333,7 +1343,7 @@
 
 /datum/status_effect/frozen/proc/do_resist()
 	to_chat(owner, "You start breaking out of the ice cube!")
-	if(do_after(owner, 40))
+	if(do_after(owner, 4 SECONDS))
 		if(!QDELETED(src))
 			to_chat(owner, "You break out of the ice cube!")
 			owner.remove_status_effect(STATUS_EFFECT_FROZEN)
@@ -1342,12 +1352,14 @@
 /datum/status_effect/frozen/on_remove()
 	if(!owner.stat)
 		to_chat(owner, "The cube melts!")
+	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	owner.cut_overlay(cube)
 	owner.update_mobility()
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	return ..()
 
 /datum/status_effect/frozen/watcher
-	duration = 8
+	duration = 8 SECONDS
 	can_melt = FALSE
 
 /datum/status_effect/frozen/cryostasis

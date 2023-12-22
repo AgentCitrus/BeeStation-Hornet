@@ -1972,7 +1972,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					H.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 
 		// Apply species and physiology modifiers to heat damage
-		burn_damage = burn_damage * heatmod * H.physiology.heat_mod
+		burn_damage = burn_damage * heatmod * H.physiology.heat_mod * (HAS_TRAIT(H, TRAIT_HEATWEAKNESS) ? 2 : 1)
 
 		// 40% for level 3 damage on humans to scream in pain
 		if (H.stat < UNCONSCIOUS && (prob(burn_damage) * 10) / 4)
@@ -1994,15 +1994,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// Display alerts based on the amount of cold damage being taken
 		// Apply more damage based on how cold you are
+		var/weakness_modifier = HAS_TRAIT(H, TRAIT_COLDWEAKNESS) ? 2 : 1
 		if (H.bodytemperature >= 200 && H.bodytemperature <= bodytemp_cold_damage_limit)
 			H.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-			H.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * H.physiology.cold_mod, BURN)
+			H.apply_damage(COLD_DAMAGE_LEVEL_1 * coldmod * H.physiology.cold_mod * weakness_modifier, BURN)
 		else if (H.bodytemperature >= 120 && H.bodytemperature < 200)
 			H.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-			H.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * H.physiology.cold_mod, BURN)
+			H.apply_damage(COLD_DAMAGE_LEVEL_2 * coldmod * H.physiology.cold_mod * weakness_modifier, BURN)
 		else
 			H.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-			H.apply_damage(COLD_DAMAGE_LEVEL_3 * coldmod * H.physiology.cold_mod, BURN)
+			H.apply_damage(COLD_DAMAGE_LEVEL_3 * coldmod * H.physiology.cold_mod * weakness_modifier, BURN)
 
 	// We are not to hot or cold, remove status and moods
 	else
@@ -2023,7 +2024,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * \
-					PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod)
+					PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * (HAS_TRAIT(H, TRAIT_HIGHPRESSUREWEAKNESS) ? 2 : 1))
 				H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 			else
 				H.clear_alert("pressure")
