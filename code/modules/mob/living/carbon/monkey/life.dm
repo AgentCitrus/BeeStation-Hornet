@@ -53,8 +53,8 @@
 	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTHEAT))
-		remove_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD)
-		var/weakness_modifier = (HAS_TRAIT(src, TRAIT_HEATWEAKNESS) ? 2 : 1)
+		remove_movespeed_modifier(/datum/movespeed_modifier/monkey_temperature_speedmod)
+		var/weakness_modifier = (HAS_TRAIT(src, TRAIT_HEATWEAKNESS)) ? 2 : 1
 		switch(bodytemperature)
 			if(360 to 400)
 				throw_alert("temp", /atom/movable/screen/alert/hot, 1)
@@ -71,8 +71,8 @@
 
 	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(src, TRAIT_RESISTCOLD))
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - bodytemperature) / COLD_SLOWDOWN_FACTOR))
-			var/weakness_modifier = (HAS_TRAIT(src, TRAIT_COLDWEAKNESS) ? 2 : 1)
+			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_temperature_speedmod, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - bodytemperature) / COLD_SLOWDOWN_FACTOR))
+			var/weakness_modifier = (HAS_TRAIT(src, TRAIT_COLDWEAKNESS)) ? 2 : 1
 			switch(bodytemperature)
 				if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 					throw_alert("temp", /atom/movable/screen/alert/cold, 1)
@@ -87,7 +87,7 @@
 			clear_alert("temp")
 
 	else
-		remove_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD)
+		remove_movespeed_modifier(/datum/movespeed_modifier/monkey_temperature_speedmod)
 		clear_alert("temp")
 
 	//Account for massive pressure differences
