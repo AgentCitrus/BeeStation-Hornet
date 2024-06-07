@@ -671,7 +671,7 @@
 	var/old_burn_mod
 
 /datum/status_effect/stoneskin/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_STONESKIN, update=TRUE, priority=100, multiplicative_slowdown=1.5)
+	owner.add_movespeed_modifier(MOVESPEED_ID_STONESKIN, update=TRUE, multiplicative_slowdown=1.5)
 	old_traits = owner.status_traits.Copy()
 	for(var/T in stoneskin_traits)
 		ADD_TRAIT(owner, T, MUTANT_TRAIT)

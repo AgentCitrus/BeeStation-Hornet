@@ -247,5 +247,5 @@
 	U.adjustFireLoss(-10, FALSE)
 	U.adjustToxLoss(-10, FALSE)
 	U.adjustOxyLoss(-10, FALSE)
-	U.add_movespeed_modifier(MOVESPEED_ID_PYRO_RAGE, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	U.add_movespeed_modifier(MOVESPEED_ID_PYRO_RAGE, update=TRUE, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	addtimer(CALLBACK(U, TYPE_PROC_REF(/mob, remove_movespeed_modifier), MOVESPEED_ID_PYRO_RAGE, TRUE), 10 SECONDS)

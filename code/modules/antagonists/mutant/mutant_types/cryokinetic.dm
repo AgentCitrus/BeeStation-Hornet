@@ -5,10 +5,7 @@
 		/obj/effect/proc_holder/spell/aimed/mutant/freezing_sphere,
 		/obj/effect/proc_holder/spell/targeted/touch/mutant/chill_touch,
 		/obj/effect/proc_holder/spell/targeted/mutant/ice_running,
-		/obj/effect/proc_holder/spell/targeted/mutant/shatter,
-		/obj/effect/proc_holder/spell/targeted/mutant/cryostasis,
-		/obj/effect/proc_holder/spell/cone/staggered/mutant/frost_gust,
-		/obj/effect/proc_holder/spell/aoe_turf/mutant/sublimation
+		/obj/effect/proc_holder/spell/targeted/mutant/shatter
 	)
 	passive_traits = list(
 		TRAIT_RESISTCOLD,
@@ -21,7 +18,9 @@
 		/datum/component/ice_running
 	)
 	special_abilities = list(
-
+		/obj/effect/proc_holder/spell/targeted/mutant/cryostasis,
+		/obj/effect/proc_holder/spell/cone/staggered/mutant/frost_gust,
+		/obj/effect/proc_holder/spell/aoe_turf/mutant/sublimation
 	)
 
 /////////////////////////////////////////

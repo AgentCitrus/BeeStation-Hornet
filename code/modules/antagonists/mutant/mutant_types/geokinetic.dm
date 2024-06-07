@@ -7,7 +7,9 @@
 
 	)
 	passive_traits = list(
-		TRAIT_NOGUNS
+		TRAIT_NOGUNS,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE
 	)
 
 /datum/mutant_type/geokinetic/on_gain(mob/living/user)
@@ -80,4 +82,4 @@
 
 /obj/effect/proc_holder/spell/spike_stomp
 	name = "Spike Stomp"
-	desc = "Stomp on the ground, raising spikes of rock around you."
+	desc = "Stomp on the ground, raising spikes of metal around you."

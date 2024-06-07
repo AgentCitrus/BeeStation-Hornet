@@ -17,7 +17,7 @@
 	var/turf/open/T = get_turf(runner)
 	var/datum/component/wet_floor/WF = T.GetComponent(/datum/component/wet_floor)
 	if(isopenturf(T) && WF && (WF.lube_flags & FROZEN_TURF))
-		runner.add_movespeed_modifier(MOVESPEED_ID_ICE_RUNNING, update=TRUE, priority=100, multiplicative_slowdown=run_multiplier, movetypes=GROUND)
+		runner.add_movespeed_modifier(MOVESPEED_ID_ICE_RUNNING, update=TRUE, multiplicative_slowdown=run_multiplier, movetypes=GROUND)
 	else
 		runner.remove_movespeed_modifier(MOVESPEED_ID_ICE_RUNNING)
 
