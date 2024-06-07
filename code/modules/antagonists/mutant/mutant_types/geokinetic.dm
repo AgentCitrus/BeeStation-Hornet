@@ -83,3 +83,11 @@
 /obj/effect/proc_holder/spell/spike_stomp
 	name = "Spike Stomp"
 	desc = "Stomp on the ground, raising spikes of metal around you."
+
+/obj/effect/proc_holder/spell/boulder_dash
+	name = "Boulder Dash"
+	desc = "This ability is a load of boulder dash. Jump and smash into a spot you can see in front of you."
+
+/obj/effect/proc_holder/spell/eat_sheet
+	name = "Geophagy"
+	desc = "Consume a sheet of material held in your hands."
