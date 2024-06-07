@@ -671,7 +671,7 @@
 	var/old_burn_mod
 
 /datum/status_effect/stoneskin/on_apply()
-	owner.add_movespeed_modifier(MOVESPEED_ID_STONESKIN, update=TRUE, multiplicative_slowdown=1.5)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/stoneskin, update=TRUE)
 	old_traits = owner.status_traits.Copy()
 	for(var/T in stoneskin_traits)
 		ADD_TRAIT(owner, T, MUTANT_TRAIT)
@@ -692,7 +692,7 @@
 		H.physiology.burn_mod = active_dam_mod
 
 /datum/status_effect/stoneskin/on_remove()
-	owner.remove_movespeed_modifier(MOVESPEED_ID_STONESKIN)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/stoneskin)
 	owner.status_traits = old_traits
 	if(ishuman(owner))
 		H.physiology.brute_mod = old_brute_mod

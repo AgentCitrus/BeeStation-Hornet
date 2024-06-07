@@ -28,6 +28,17 @@
 	variable = TRUE
 	blacklisted_movetypes = FLOATING
 
+/datum/movespeed_modifier/pyro_rage
+	multiplicative_slowdown = -0.5
+	blacklisted_movetypes = FLOATING|FLYING
+
+/datum/movespeed_modifier/ice_running
+	multiplicative_slowdown = -1
+	movetypes = GROUND
+
+/datum/movespeed_modifier/stoneskin
+	multiplicative_slowdown = 1.5
+
 /datum/movespeed_modifier/grab_slowdown
 	id = MOVESPEED_ID_MOB_GRAB_STATE
 	blacklisted_movetypes = FLOATING
