@@ -167,6 +167,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	/// The tool speed multiplier of how long it takes to do the tool action.
 	var/toolspeed = 1
 
+	/// Used in varying capacity by different items (i.e. higher quality screwdrivers have reduced toolspeed). See handle_quality().
+	var/item_quality = ITEM_QUALITY_NORMAL
+	/// Whether to show item quality in examine text or not
+	var/show_quality = TRUE
+
 	/// The chance that holding this item will block attacks.
 	var/block_level = 0
 	//does the item block better if walking?
@@ -257,6 +262,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
 
+	if(item_quality)
+		handle_quality()
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
@@ -343,6 +351,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
+
+	if(item_quality && show_quality)
+		var/icon/quality_icon = icon('icons/effects/quality.dmi')
+		. += "[icon2html(quality_icon, user, item_quality)] [gender == PLURAL ? "They are" : "It is"] a <b>[item_quality]</b> quality item."
 
 	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
 
@@ -1449,6 +1461,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		else
 			return FALSE
 	return TRUE
+
+// introduce effects based on quality
+/obj/item/proc/handle_quality()
+
+// change the item's quality and apply the relevant effects
+/obj/item/proc/update_quality(quality)
+	item_quality = quality
+	handle_quality()
 
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)

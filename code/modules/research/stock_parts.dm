@@ -259,6 +259,12 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "matter_bin"
 	custom_materials = list(/datum/material/iron=80)
 
+/obj/item/stock_parts/lathe_processor
+	name = "lathe design processor"
+	desc = "A processor responsible for optimizing lathe construction."
+	icon_state = "lathe_processor"
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+
 //Rating 2
 
 /obj/item/stock_parts/capacitor/adv
@@ -295,6 +301,13 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "advanced_matter_bin"
 	rating = 2
 	custom_materials = list(/datum/material/iron=80)
+
+/obj/item/stock_parts/lathe_processor/adv
+	name = "advanced lathe design processor"
+	desc = "A processor responsible for optimizing lathe construction."
+	icon_state = "advanced_lathe_processor"
+	rating = 2
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 //Rating 3
 
@@ -333,6 +346,13 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	rating = 3
 	custom_materials = list(/datum/material/iron=80)
 
+/obj/item/stock_parts/lathe_processor/super
+	name = "super lathe design processor"
+	desc = "A processor responsible for optimizing lathe construction."
+	icon_state = "super_lathe_processor"
+	rating = 3
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+
 //Rating 4
 
 /obj/item/stock_parts/capacitor/quadratic
@@ -369,6 +389,13 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	icon_state = "bluespace_matter_bin"
 	rating = 4
 	custom_materials = list(/datum/material/iron=80)
+
+/obj/item/stock_parts/lathe_processor/quantum
+	name = "quantum lathe design processor"
+	desc = "A processor responsible for optimizing lathe construction."
+	icon_state = "quantum_lathe_processor"
+	rating = 4
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 
 // Subspace stock parts
 
